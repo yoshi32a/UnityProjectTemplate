@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using R3;
 using UnityEngine;
 using ZLogger;
 using ZLogger.Unity;
@@ -30,6 +31,10 @@ public class Test : MonoBehaviour
         var name = "foo";
         await UniTask.Delay(TimeSpan.FromSeconds(2));
         logger.ZLogInformation($"async");
+        
+        Observable.Timer(TimeSpan.FromSeconds(2))
+            .Subscribe(_ => logger.ZLogInformation($"async2"))
+            .AddTo(this);
     }
     
 }
