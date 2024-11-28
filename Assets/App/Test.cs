@@ -9,6 +9,7 @@ using ZLogger.Unity;
 public class Test : MonoBehaviour
 {
     ILogger<Test> logger;
+
     void Start()
     {
         var loggerFactory = LoggerFactory.Create(logging =>
@@ -21,9 +22,8 @@ public class Test : MonoBehaviour
 
         var name = "foo";
         logger.ZLogInformation($"Hello, {name}!");
-        
+
         SampleAsync().Forget();
-        
     }
 
     async UniTask SampleAsync()
@@ -31,10 +31,7 @@ public class Test : MonoBehaviour
         var name = "foo";
         await UniTask.Delay(TimeSpan.FromSeconds(2));
         logger.ZLogInformation($"async");
-        
-        Observable.Timer(TimeSpan.FromSeconds(2))
-            .Subscribe(_ => logger.ZLogInformation($"async2"))
-            .AddTo(this);
+
+        Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ => logger.ZLogInformation($"async2")).AddTo(this);
     }
-    
 }
