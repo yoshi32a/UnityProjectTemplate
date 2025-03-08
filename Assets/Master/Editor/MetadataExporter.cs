@@ -2,21 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using MasterMemory;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Master.Editor
 {
     public static class MetadataExporter
     {
-        static readonly string CsvPath =
-            $"{Directory.GetCurrentDirectory()}{Path.PathSeparator}Assets{Path.PathSeparator}Master{Path.PathSeparator}CSV{Path.PathSeparator}";
-
-        static readonly string BinPath =
-            $"{Directory.GetCurrentDirectory()}{Path.PathSeparator}Assets{Path.PathSeparator}Master{Path.PathSeparator}Bin{Path.PathSeparator}";
+        static readonly string CsvPath = $"{Directory.GetCurrentDirectory()}/Assets/Master/CSV/";
 
         [MenuItem("Tools/Master/Create Metadata")]
         public static void ExportMetadata()
@@ -27,17 +25,26 @@ namespace Master.Editor
             foreach (var table in metaDB.GetTableInfos())
             {
                 sb.Clear();
+
+                // ファイルがあったら一旦作らない
+                if (File.Exists($"{CsvPath}{table.TableName}.csv"))
+                {
+                    Debug.Log("continue");
+                    continue;
+                }
+
                 foreach (var prop in table.Properties)
                 {
                     if (sb.Length != 0)
                     {
-                        sb.Append(",");
+                        sb.Append(',');
                     }
 
                     sb.Append(prop.NameSnakeCase);
                 }
 
                 File.WriteAllText($"{CsvPath}{table.TableName}.csv", sb.ToString(), new UTF8Encoding(false));
+                Debug.Log($"csvファイルを作りました {CsvPath}{table.TableName}.csv");
             }
         }
 
@@ -56,7 +63,6 @@ namespace Master.Editor
                 var csvAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
                 var tableName = Path.GetFileNameWithoutExtension(path);
                 var csv = csvAsset.text;
-
 
                 var meta = MemoryDatabase.GetMetaDatabase();
                 var table = meta.GetTableInfo(tableName);
@@ -89,8 +95,7 @@ namespace Master.Editor
                             }
                             else
                             {
-                                throw new KeyNotFoundException(
-                                    $"Not found \"{prop.NameSnakeCase}\" in \"{tableName}.csv\" header.");
+                                throw new KeyNotFoundException($"Not found \"{prop.NameSnakeCase}\" in \"{tableName}.csv\" header.");
                             }
                         }
 
@@ -101,7 +106,6 @@ namespace Master.Editor
                 // add dynamic collection.
                 builder.AppendDynamic(table.DataType, tableData);
             }
-
 
             var bin = builder.Build();
             var database = new MemoryDatabase(bin, maxDegreeOfParallelism: Environment.ProcessorCount);
@@ -114,18 +118,27 @@ namespace Master.Editor
             }
             else
             {
+                File.WriteAllBytes($"{Utility.BinPath}", bin);
                 Debug.Log("[Completed] Master.bin exported.");
-                File.WriteAllBytes($"{BinPath}master.bin", bin);
+
+                AssetDatabase.ImportAsset(Utility.BinPath);
             }
         }
 
         static object ParseValue(Type type, string rawValue)
         {
-            if (type == typeof(string)) return rawValue;
+            if (type == typeof(string))
+            {
+                return rawValue;
+            }
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                if (string.IsNullOrWhiteSpace(rawValue)) return null;
+                if (string.IsNullOrWhiteSpace(rawValue))
+                {
+                    return null;
+                }
+
                 return ParseValue(type.GenericTypeArguments[0], rawValue);
             }
 
@@ -133,6 +146,34 @@ namespace Master.Editor
             {
                 var value = Enum.Parse(type, rawValue);
                 return value;
+            }
+
+            if (type.IsArray)
+            {
+                if (type == typeof(int[]))
+                {
+                    if (string.IsNullOrEmpty(rawValue))
+                    {
+                        return Array.Empty<int>();
+                    }
+
+                    using (ListPool<int>.Get(out var intPool))
+                    {
+                        foreach (var s in rawValue.Split(','))
+                        {
+                            if (int.TryParse(s, out var x))
+                            {
+                                intPool.Add(x);
+                            }
+                            else
+                            {
+                                Debug.LogError($"元データ{rawValue}の {s} が整数ではありません");
+                            }
+                        }
+
+                        return intPool.ToArray();
+                    }
+                }
             }
 
             switch (Type.GetTypeCode(type))
@@ -146,31 +187,35 @@ namespace Master.Editor
 
                     return bool.Parse(rawValue);
                 case TypeCode.Char:
-                    return Char.Parse(rawValue);
+                    return char.Parse(rawValue);
                 case TypeCode.SByte:
-                    return SByte.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return sbyte.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Byte:
-                    return Byte.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return byte.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Int16:
-                    return Int16.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return short.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.UInt16:
-                    return UInt16.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return ushort.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Int32:
-                    return Int32.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return int.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.UInt32:
-                    return UInt32.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return uint.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Int64:
-                    return Int64.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return long.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.UInt64:
-                    return UInt64.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return ulong.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Single:
-                    return Single.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return float.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Double:
-                    return Double.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return double.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.Decimal:
-                    return Decimal.Parse(rawValue, CultureInfo.InvariantCulture);
+                    return decimal.Parse(rawValue, CultureInfo.InvariantCulture);
                 case TypeCode.DateTime:
                     return DateTime.Parse(rawValue, CultureInfo.InvariantCulture);
+                case TypeCode.DBNull:
+                case TypeCode.Empty:
+                case TypeCode.Object:
+                case TypeCode.String:
                 default:
                     if (type == typeof(DateTimeOffset))
                     {
@@ -186,7 +231,7 @@ namespace Master.Editor
                     }
 
                     // or other your custom parsing.
-                    throw new NotSupportedException();
+                    throw new NotSupportedException($"{type}はサポートしていない型です");
             }
         }
     }

@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using Cysharp.Threading.Tasks;
+using Master;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
@@ -24,6 +26,12 @@ public class Test : MonoBehaviour
         logger.ZLogInformation($"Hello, {name}!");
 
         SampleAsync().Forget();
+
+
+        if (File.Exists(Utility.BinPath))
+        {
+            MemoryDatabase db = new MemoryDatabase(File.ReadAllBytes(Utility.BinPath), maxDegreeOfParallelism: 6);
+        }
     }
 
     async UniTask SampleAsync()

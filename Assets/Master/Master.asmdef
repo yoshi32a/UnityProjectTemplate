@@ -2,7 +2,6 @@
     "name": "Master",
     "rootNamespace": "",
     "references": [
-        "GUID:0632cc6b22db61d41898dfef78dc32f5",
         "GUID:034c977408447714e91237bd5f97c1ff"
     ],
     "includePlatforms": [],

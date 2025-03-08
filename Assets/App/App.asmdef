@@ -10,8 +10,7 @@
         "UniTask.TextMeshPro",
         "ZString",
         "R3.Unity",
-        "MasterMemory",
-        "MessagePack"
+        "Master"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

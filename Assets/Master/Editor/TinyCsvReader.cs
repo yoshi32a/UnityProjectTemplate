@@ -6,7 +6,7 @@ namespace Master.Editor
 {
     public class TinyCsvReader : IDisposable
     {
-        static char[] trim =
+        static readonly char[] Trim =
         {
             ' ',
             '\t'
@@ -30,7 +30,10 @@ namespace Master.Editor
             while (index < line.Length)
             {
                 var s = GetValue(line, ref index);
-                if (s.Length == 0) break;
+                if (s.Length == 0)
+                {
+                    break;
+                }
                 header.Add(s);
             }
 
@@ -41,9 +44,23 @@ namespace Master.Editor
         {
             var temp = new char[line.Length - i];
             var j = 0;
+            var skip = false;
+            var startIndex = 0;
             for (; i < line.Length; i++)
             {
-                if (line[i] == ',')
+                if (line[i] == '[')
+                {
+                    skip = true;
+                    continue;
+                }
+
+                if (line[i] == ']')
+                {
+                    skip = false;
+                    continue;
+                }
+
+                if (line[i] == ',' && !skip)
                 {
                     i += 1;
                     break;
@@ -52,18 +69,25 @@ namespace Master.Editor
                 temp[j++] = line[i];
             }
 
-            return new string(temp, 0, j).Trim(trim);
+            return new string(temp, 0, j).Trim(Trim);
         }
 
         public string[] ReadValues()
         {
             var line = reader.ReadLine();
-            if (line == null) return null;
-            if (string.IsNullOrWhiteSpace(line)) return null;
+            if (line == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                return null;
+            }
 
             var values = new string[Header.Count];
             var lineIndex = 0;
-            for (int i = 0; i < values.Length; i++)
+            for (var i = 0; i < values.Length; i++)
             {
                 var s = GetValue(line, ref lineIndex);
                 values[i] = s;

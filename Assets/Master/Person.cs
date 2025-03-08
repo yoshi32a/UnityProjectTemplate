@@ -30,4 +30,19 @@ namespace Master
 
         public string Name { get; set; }
     }
+
+    [MemoryTable("superman"), MessagePackObject(true)]
+    public class Superman
+    {
+        [PrimaryKey, Key(0)]
+        public int GroupId { get; set; }
+
+        [Key(1)]
+        public int[] Members { get; set; }
+        [Key(2)]
+        public int[] Scores { get; set; }
+
+
+
+    }
 }

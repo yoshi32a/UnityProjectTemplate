@@ -2,9 +2,7 @@
     "name": "Master.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:50a4f88ab67d95345af563d8617bb374",
-        "GUID:0632cc6b22db61d41898dfef78dc32f5",
-        "GUID:bbde805d927e795439d7a746d1749cab"
+        "GUID:50a4f88ab67d95345af563d8617bb374"
     ],
     "includePlatforms": [
         "Editor"
