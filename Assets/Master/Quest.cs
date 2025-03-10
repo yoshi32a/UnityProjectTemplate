@@ -51,5 +51,23 @@ namespace Master
     public class Item
     {
         [PrimaryKey] public int ItemId { get; set; }
+
+        public Content Content { get; set; }
+    }
+
+    public enum ContentType
+    {
+        Apple,
+    }
+
+    [MessagePackObject]
+    public class Content
+    {
+        [Key(0)]
+        public ContentType Type { get; set; }
+        [Key(1)]
+        public int Id { get; set; }
+        [Key(2)]
+        public int Count { get; set; }
     }
 }

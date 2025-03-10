@@ -221,13 +221,34 @@ namespace Master.Editor
                     {
                         return DateTimeOffset.Parse(rawValue, CultureInfo.InvariantCulture);
                     }
-                    else if (type == typeof(TimeSpan))
+
+                    if (type == typeof(TimeSpan))
                     {
                         return TimeSpan.Parse(rawValue, CultureInfo.InvariantCulture);
                     }
-                    else if (type == typeof(Guid))
+                    if (type == typeof(Guid))
                     {
                         return Guid.Parse(rawValue);
+                    }
+
+                    if (string.IsNullOrEmpty(rawValue))
+                    {
+                        return null;
+                    }
+
+                    if (type == typeof(Content))
+                    {
+                        var values = rawValue.Split(',');
+                        if (values.Length != 3)
+                        {
+                            throw new IndexOutOfRangeException($"Content{rawValue}の個数が{values.Length}しかありません。3個必要です。");
+                        }
+                        return new Content
+                        {
+                            Type = Enum.Parse<ContentType>(values[0]),
+                            Id = int.Parse(values[1]),
+                            Count = int.Parse(values[2])
+                        };
                     }
 
                     // or other your custom parsing.

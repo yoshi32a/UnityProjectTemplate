@@ -45,7 +45,6 @@ namespace Master.Editor
             var temp = new char[line.Length - i];
             var j = 0;
             var skip = false;
-            var startIndex = 0;
             for (; i < line.Length; i++)
             {
                 if (line[i] == '[')
