@@ -10,7 +10,8 @@
         "UniTask.TextMeshPro",
         "ZString",
         "R3.Unity",
-        "Master"
+        "Master",
+        "VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
