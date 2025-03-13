@@ -6,8 +6,8 @@ using VContainer.Unity;
 using ZLogger;
 using ZLogger.Unity;
 
-namespace App;
-
+namespace App
+{
 public class RootLifetimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
@@ -23,6 +23,8 @@ public class RootLifetimeScope : LifetimeScope
             builder.Register<IMasterLoader, MasterLoader>(Lifetime.Singleton);
         }
 
+        builder.Register<MasterManager>(Lifetime.Singleton);
+
         var loggerFactory = LoggerFactory.Create(logging =>
         {
             logging.SetMinimumLevel(LogLevel.Trace);
@@ -32,12 +34,18 @@ public class RootLifetimeScope : LifetimeScope
                 {
                     formatter.SetPrefixFormatter($"[{0}]", (in MessageTemplate template, in LogInfo info) => template.Format(info.Category));
                 });
-                option.PrettyStacktrace = true;
-                option.IsFormatLogImmediatelyInStandardLog = true;
             }); // log to UnityDebug
         });
 
         builder.RegisterInstance(loggerFactory);
         builder.RegisterInstance(loggerFactory.CreateLogger("default"));
+
+
+
+        builder.RegisterBuildCallback(container =>
+        {
+
+        });
     }
+}
 }

@@ -9,11 +9,13 @@ using VContainer;
 using ZLogger;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
+namespace App
+{
 public class Test : MonoBehaviour
 {
     ILogger<Test> logger;
-    [Inject]
-    ILogger log;
+    [Inject] ILogger log;
+    [Inject] MasterManager master;
 
     [Inject]
     public void Construct(ILoggerFactory loggerFactory)
@@ -27,15 +29,10 @@ public class Test : MonoBehaviour
         logger.ZLogInformation($"Hello, {value}!");
         log.ZLogInformation($"log hello");
 
+
+        logger.ZLogInformation($"{master.DB.ItemTable.FindByItemId(1).Content.Type}");
+
         SampleAsync().Forget();
-
-        if (File.Exists(Utility.BinPath))
-        {
-            IMasterLoader masterLoader = new CsvMasterLoader();
-            MemoryDatabase db = masterLoader.Load();
-
-            Debug.Log("load master success");
-        }
     }
 
     async UniTask SampleAsync()
@@ -45,4 +42,5 @@ public class Test : MonoBehaviour
 
         Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ => logger.ZLogInformation($"async2")).AddTo(this);
     }
+}
 }
