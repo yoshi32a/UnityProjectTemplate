@@ -3,16 +3,16 @@ using MessagePack;
 
 namespace Master
 {
-    [MemoryTable("quest_master"), MessagePackObject(true)]
+    [MemoryTable("quest_master"), MessagePackObject(false)]
     public class Quest : IValidatable<Quest>
     {
         // UniqueKeyの場合はValidate時にデフォルトで重複かの検証がされる
-        [PrimaryKey] public int Id { get; set; }
+        [PrimaryKey] [Key(0)] public int Id { get; set; }
 
-        public string Name { get; set; }
-        public int RewardId { get; set; }
-        public int Cost { get; set; }
-        public MyEnum MyProperty { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public int RewardId { get; set; }
+        [Key(3)] public int Cost { get; set; }
+        [Key(4)] public MyEnum MyProperty { get; set; }
 
         void IValidatable<Quest>.Validate(IValidator<Quest> validator)
         {
@@ -47,12 +47,12 @@ namespace Master
         }
     }
 
-    [MemoryTable("item"), MessagePackObject(true)]
+    [MemoryTable("item"), MessagePackObject(false)]
     public class Item
     {
-        [PrimaryKey] public int ItemId { get; set; }
+        [PrimaryKey] [Key(0)] public int ItemId { get; set; }
 
-        public Content Content { get; set; }
+        [Key(1)] public Content Content { get; set; }
     }
 
     public enum ContentType
@@ -63,11 +63,8 @@ namespace Master
     [MessagePackObject]
     public class Content
     {
-        [Key(0)]
-        public ContentType Type { get; set; }
-        [Key(1)]
-        public int Id { get; set; }
-        [Key(2)]
-        public int Count { get; set; }
+        [Key(0)] public ContentType Type { get; set; }
+        [Key(1)] public int Id { get; set; }
+        [Key(2)] public int Count { get; set; }
     }
 }

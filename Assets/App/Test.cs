@@ -30,7 +30,9 @@ public class Test : MonoBehaviour
 
         if (File.Exists(Utility.BinPath))
         {
-            MemoryDatabase db = new MemoryDatabase(File.ReadAllBytes(Utility.BinPath), maxDegreeOfParallelism: 6);
+            IMasterLoader masterLoader = new CsvMasterLoader();
+            MemoryDatabase db = masterLoader.Load();
+
         }
     }
 
