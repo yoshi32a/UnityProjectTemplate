@@ -22,23 +22,22 @@ public class Test : MonoBehaviour
 
         logger = loggerFactory.CreateLogger<Test>();
 
-        var name = "foo";
-        logger.ZLogInformation($"Hello, {name}!");
+        var value = "foo";
+        logger.ZLogInformation($"Hello, {value}!");
 
         SampleAsync().Forget();
-
 
         if (File.Exists(Utility.BinPath))
         {
             IMasterLoader masterLoader = new CsvMasterLoader();
             MemoryDatabase db = masterLoader.Load();
 
+            Debug.Log("load master success");
         }
     }
 
     async UniTask SampleAsync()
     {
-        var name = "foo";
         await UniTask.Delay(TimeSpan.FromSeconds(2));
         logger.ZLogInformation($"async");
 

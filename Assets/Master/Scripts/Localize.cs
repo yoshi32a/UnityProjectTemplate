@@ -9,7 +9,7 @@ namespace Master
         [PrimaryKey, Key(0)]
         public int Key { get; set; }
 
-        [PrimaryKey, Key(1)]
+        [Key(1)]
         public string Value { get; set; }
 
         public void Validate(IValidator<Localize> validator)

@@ -29,12 +29,12 @@ namespace Master
         [Key(2)]
         public Gender Gender { get; set; }
 
-        [Key(3)] public int TextKey { get; set; }
+        [Key(3)] public int NameId { get; set; }
 
         public void Validate(IValidator<Person> validator)
         {
             var localize = validator.GetReferenceSet<Localize>();
-            localize.Exists(x => x.TextKey, x => x.Key);
+            localize.Exists(x => x.NameId, x => x.Key);
         }
     }
 
