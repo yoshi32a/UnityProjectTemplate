@@ -12,9 +12,9 @@ using UnityEngine;
 // Optional: If you want to use init keyword, copy-and-paste this.
 namespace System.Runtime.CompilerServices
 {
-    internal sealed class IsExternalInit
-    {
-    }
+internal sealed class IsExternalInit
+{
+}
 }
 
 public static class Initializer

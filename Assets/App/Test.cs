@@ -5,25 +5,27 @@ using Master;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
+using VContainer;
 using ZLogger;
-using ZLogger.Unity;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 public class Test : MonoBehaviour
 {
     ILogger<Test> logger;
+    [Inject]
+    ILogger log;
+
+    [Inject]
+    public void Construct(ILoggerFactory loggerFactory)
+    {
+        logger = loggerFactory.CreateLogger<Test>();
+    }
 
     void Start()
     {
-        var loggerFactory = LoggerFactory.Create(logging =>
-        {
-            logging.SetMinimumLevel(LogLevel.Trace);
-            logging.AddZLoggerUnityDebug(); // log to UnityDebug
-        });
-
-        logger = loggerFactory.CreateLogger<Test>();
-
         var value = "foo";
         logger.ZLogInformation($"Hello, {value}!");
+        log.ZLogInformation($"log hello");
 
         SampleAsync().Forget();
 
