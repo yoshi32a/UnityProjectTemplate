@@ -1,0 +1,12 @@
+{
+  "author": "yoshi32a",
+  "description": "InspectorExtension",
+  "displayName": "InspectorExtension",
+  "keywords": [
+    "unity"
+  ],
+  "name": "inspector-extension",
+  "unity": "2023.3",
+  "version": "1.0.0",
+  "hideInEditor": false
+}

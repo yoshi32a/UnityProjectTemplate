@@ -265,6 +265,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "inspector-extension": {
+      "version": "file:inspector-extension",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer",
       "depth": 0,
