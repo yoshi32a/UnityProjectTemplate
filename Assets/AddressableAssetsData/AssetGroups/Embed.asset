@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Embed
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Embed
   m_GUID: f9706e75fd0c76642bb621704a991e33
   m_SerializeEntries:
   - m_GUID: 425a3f783485a0a43bb6886af5c80a59
-    m_Address: Assets/Prefabs/Capsule.prefab
+    m_Address: Capsule
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
