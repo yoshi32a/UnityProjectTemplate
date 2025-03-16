@@ -11,7 +11,9 @@
         "ZString",
         "R3.Unity",
         "Master",
-        "VContainer"
+        "VContainer",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

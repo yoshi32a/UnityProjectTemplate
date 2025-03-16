@@ -1,3 +1,4 @@
+using App;
 using Master;
 using Microsoft.Extensions.Logging;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class RootLifetimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
+        Application.targetFrameRate = 60;
+
 #if UNITY_EDITOR
         if (Application.isEditor)
         {
@@ -40,11 +43,9 @@ public class RootLifetimeScope : LifetimeScope
         builder.RegisterInstance(loggerFactory);
         builder.RegisterInstance(loggerFactory.CreateLogger("default"));
 
-
-
         builder.RegisterBuildCallback(container =>
         {
-
+            container.Resolve<MasterManager>();
         });
     }
 }

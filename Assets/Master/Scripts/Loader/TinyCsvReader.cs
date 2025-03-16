@@ -72,7 +72,7 @@ public class TinyCsvReader : IDisposable
         return new string(temp, 0, j).Trim(Trim);
     }
 
-    public string[] ReadValues()
+    string[] ReadValues()
     {
         var line = reader.ReadLine();
         if (line == null)
