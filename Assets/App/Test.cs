@@ -18,13 +18,14 @@ namespace App
 public class Test : MonoBehaviour
 {
     ILogger<Test> logger;
-    [Inject] ILogger log;
+    ILogger logger2;
     [SerializeField] AssetReference reference;
 
     [Inject]
-    public void Construct(ILoggerFactory loggerFactory)
+    public void Construct(ILoggerFactory loggerFactory, ILogger logger2)
     {
         logger = loggerFactory.CreateLogger<Test>();
+        this.logger2 = logger2;
         // reference.LoadAssetAsync<>()
         reference.ReleaseAsset();
     }
@@ -33,7 +34,7 @@ public class Test : MonoBehaviour
     {
         var value = "foo";
         logger.ZLogInformation($"Hello, {value}!");
-        log.ZLogInformation($"log hello");
+        logger2.ZLogInformation($"log hello");
 
         logger.ZLogInformation($"{MasterManager.DB.ItemTable.FindByItemId(1).Content.Type}");
 
