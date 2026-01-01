@@ -58,7 +58,7 @@ public static class MasterExporter
         File.WriteAllBytes($"{Utility.BinPath}", bin);
         Debug.Log("[Completed] Master.bin exported.");
 
-        AssetDatabase.ImportAsset(Utility.BinPath);
+        AssetDatabase.Refresh();
     }
 }
 }
