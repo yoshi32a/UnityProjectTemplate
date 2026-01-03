@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using Master.Editor;
 using MasterMemory;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -137,6 +138,53 @@ public class CsvMasterLoader : IMasterLoader
                     return intPool.ToArray();
                 }
             }
+            // float[] support
+            if (type == typeof(float[]))
+            {
+                if (string.IsNullOrEmpty(rawValue))
+                {
+                    return Array.Empty<float>();
+                }
+
+                using (ListPool<float>.Get(out var floatPool))
+                {
+                    foreach (var s in rawValue.Split(','))
+                    {
+                        if (float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var x))
+                        {
+                            floatPool.Add(x);
+                        }
+                        else
+                        {
+                            Debug.LogError($"元データ{rawValue}の {s} が数値(float)ではありません");
+                        }
+                    }
+
+                    return floatPool.ToArray();
+                }
+            }
+        }
+        
+        // float3 support
+        if (type == typeof(float3))
+        {
+            if (string.IsNullOrEmpty(rawValue))
+            {
+                return float3.zero;
+            }
+            
+            var split = rawValue.Trim('"').Split(',');
+            if (split.Length == 3)
+            {
+                if (float.TryParse(split[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var x) &&
+                    float.TryParse(split[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var y) &&
+                    float.TryParse(split[2], NumberStyles.Float, CultureInfo.InvariantCulture, out var z))
+                {
+                    return new float3(x, y, z);
+                }
+            }
+            Debug.LogError($"Failed to parse Vector3 from: {rawValue}");
+            return float3.zero;
         }
 
         switch (Type.GetTypeCode(type))

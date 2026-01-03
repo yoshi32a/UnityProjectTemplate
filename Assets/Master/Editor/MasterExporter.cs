@@ -46,6 +46,8 @@ public static class MasterExporter
     [MenuItem("Tools/Master/CsvToBin")]
     public static void ExportBinFromCsv()
     {
+        Initializer.SetupMessagePackResolver();
+        
         var loader = new CsvMasterLoader();
         var database = loader.Load();
 

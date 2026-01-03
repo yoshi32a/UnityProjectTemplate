@@ -1,6 +1,7 @@
 using Master;
 using MasterMemory;
 using MessagePack;
+using MessagePack.Formatters;
 using MessagePack.Resolvers;
 using UnityEngine;
 
@@ -24,15 +25,20 @@ public static class Initializer
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void SetupMessagePackResolver()
     {
-        // Create CompositeResolver
-        StaticCompositeResolver.Instance.Register(new[]
+        // Custom resolvers
+        var customResolvers = new IMessagePackFormatter[]
         {
-            MasterMemoryResolver.Instance, // set MasterMemory generated resolver
-            StandardResolver.Instance // set default MessagePack resolver
-        });
+            new Master.Formatters.Float3Formatter()
+        };
+
+        // Create CompositeResolver
+        var resolver = MessagePack.Resolvers.CompositeResolver.Create(
+            customResolvers, // custom formatters
+            new[] { MasterMemoryResolver.Instance, StandardResolver.Instance } // resolvers
+        );
 
         // Create options with resolver
-        var options = MessagePackSerializerOptions.Standard.WithResolver(StaticCompositeResolver.Instance);
+        var options = MessagePackSerializerOptions.Standard.WithResolver(resolver);
 
         // Optional: as default.
         MessagePackSerializer.DefaultOptions = options;
