@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2150f3725f72124010b4479aae82fe4a610217a8"
+      "hash": "c91cd7ac9068de3d1a96b5b31453239cac47d51e"
     },
     "com.cysharp.r3": {
       "version": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
@@ -14,14 +14,14 @@
       "dependencies": {
         "com.unity.modules.imgui": "1.0.0"
       },
-      "hash": "dd0db5d885d572f7d359434ba82faecd4fc4bf29"
+      "hash": "24d04125d68719816e24dfb79c60dd97ca396038"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "cc3c70af90d4edbe5bf448fe3747545ca40ec45a"
+      "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
     },
     "com.cysharp.zlinq": {
       "version": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
@@ -35,28 +35,41 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e03df464106e2ca192eefe43c6a2785a587aa862"
+      "hash": "d1c4a1c5c713832cc85a1c72dca62262d72fee82"
     },
     "com.cysharp.zstring": {
       "version": "https://github.com/Cysharp/ZString.git?path=src/ZString.Unity/Assets/Scripts/ZString",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6ee9c1e7ef1412458602ff9697f5fbff24281f74"
+      "hash": "9fae2bebcf8768398905aba0e64a25f2384b4556"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "36d3260fdca03bf6feb105c67022d1fd7629dd2f"
+      "hash": "34432703a177c97631a4eb1d908f086037c67969"
     },
     "com.github.messagepack-csharp": {
       "version": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e9ba7483fe45b4b1d133d6c3a0bf0529e212522f"
+      "hash": "39e4a792100d19e7da6ed42ff12b3bc21aac28e8"
+    },
+    "com.needle.compilation-visualizer": {
+      "version": "https://github.com/needle-tools/compilation-visualizer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "18e171af30b8765d40dfd0c067807d7c10e5cd9e"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
     },
     "com.unity.addressables": {
       "version": "2.7.6",
@@ -84,7 +97,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.26",
+      "version": "1.8.27",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -93,15 +106,22 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.collab-proxy": {
+      "version": "2.10.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collections": {
-      "version": "2.6.3",
+      "version": "2.6.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.25",
         "com.unity.mathematics": "1.3.2",
         "com.unity.test-framework": "1.4.6",
-        "com.unity.nuget.mono-cecil": "1.11.5",
+        "com.unity.nuget.mono-cecil": "1.11.6",
         "com.unity.test-framework.performance": "3.0.3"
       },
       "url": "https://packages.unity.com"
@@ -114,33 +134,33 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.entities": {
-      "version": "1.4.3",
+      "version": "1.4.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.25",
-        "com.unity.collections": "2.6.3",
+        "com.unity.collections": "2.6.4",
         "com.unity.mathematics": "1.3.2",
         "com.unity.modules.audio": "1.0.0",
-        "com.unity.serialization": "3.1.2",
-        "com.unity.profiling.core": "1.0.2",
+        "com.unity.serialization": "3.1.3",
+        "com.unity.profiling.core": "1.0.3",
         "com.unity.modules.physics": "1.0.0",
-        "com.unity.nuget.mono-cecil": "1.11.5",
+        "com.unity.nuget.mono-cecil": "1.11.6",
         "com.unity.modules.uielements": "1.0.0",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.unityanalytics": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.scriptablebuildpipeline": "1.21.25",
+        "com.unity.scriptablebuildpipeline": "1.23.1",
         "com.unity.test-framework.performance": "3.0.3"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.entities.graphics": {
-      "version": "1.4.16",
+      "version": "1.4.17",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.entities": "1.4.3",
+        "com.unity.entities": "1.4.4",
         "com.unity.render-pipelines.core": "14.0.10",
         "com.unity.modules.particlesystem": "1.0.0"
       },
@@ -370,15 +390,14 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "com.unity.visualscripting": {
-      "version": "1.9.9",
+    "com.unity.visualeffectgraph": {
+      "version": "17.3.0",
       "depth": 0,
-      "source": "registry",
+      "source": "builtin",
       "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
+        "com.unity.shadergraph": "17.3.0",
+        "com.unity.render-pipelines.core": "17.3.0"
+      }
     },
     "inspector-extension": {
       "version": "file:inspector-extension",

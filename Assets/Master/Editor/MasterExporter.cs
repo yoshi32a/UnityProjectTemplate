@@ -56,6 +56,14 @@ public static class MasterExporter
             return;
         }
 
+        // Validate
+        var validateResult = database.Validate();
+        if (validateResult.IsValidationFailed)
+        {
+            Debug.LogError("Master Data Validation Failed:\n" + validateResult.FormatFailedResults());
+            return;
+        }
+
         var bin = database.ToDatabaseBuilder().Build();
         File.WriteAllBytes($"{Utility.BinPath}", bin);
         Debug.Log("[Completed] Master.bin exported.");
