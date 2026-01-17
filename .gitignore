@@ -72,3 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Assets/Packages/
 .idea/
+
+# Claude Code local settings
+.claude/settings.local.json
